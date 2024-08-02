@@ -1,0 +1,18 @@
+---
+// src/pages/404.astro
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { i18n } from "../i18n/translation";
+import I18nKey from "../i18n/i18nKey";
+---
+
+<MainGridLayout title={i18n(I18nKey.pageNotFound)} description={i18n(I18nKey.pageNotFound)}>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+        <div class="card-base z-10 px-9 py-6 relative w-full text-center">
+            <h1 class="text-4xl font-bold text-blue-600">404 - 页面不存在</h1>
+            <p class="text-lg text-gray-700 mt-4">Oops! The page you are looking for does not exist.</p>
+            <p class="text-lg text-gray-700 mt-4">
+                <a href="/" class="text-blue-500 hover:text-blue-700 underline">返回主页</a>
+            </p>
+        </div>
+    </div>
+</MainGridLayout>

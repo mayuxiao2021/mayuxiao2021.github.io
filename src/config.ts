@@ -30,7 +30,12 @@ export const siteConfig: SiteConfig = {
     //   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
     //   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
     // }
-  ]
+  ],
+  friendsLinks: [
+    { name: 'Friend 1', url: 'https://example.com' },
+    { name: 'Friend 2', url: 'https://example.com' },
+    { name: 'Friend 3', url: 'https://example.com' },
+  ],
 }
 
 export const navBarConfig: NavBarConfig = {
@@ -40,7 +45,7 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.About,
     {
       name: 'GitHub',
-      url: 'https://github.com/saicaca/fuwari',     // Internal links should not include the base path, as it is automatically added
+      url: 'https://github.com/mayuxiao2021/mayuxiao2021.github.io',     // Internal links should not include the base path, as it is automatically added
       external: true,                               // Show an external link icon and will open in a new tab
     },
   ],
@@ -66,7 +71,7 @@ export const profileConfig: ProfileConfig = {
     {
       name: 'GitHub',
       icon: 'fa6-brands:github',
-      url: 'https://github.com/saicaca/fuwari',
+      url: 'https://github.com/mayuxiao2021/mayuxiao2021.github.io',
     },
   ],
 }
@@ -76,3 +81,9 @@ export const licenseConfig: LicenseConfig = {
   name: 'CC BY-NC-SA 4.0',
   url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
 }
+
+export const FRIENDLY_LINKS = [
+  { name: "Example Site", url: "https://example.com", description: "Description for Example Site" },
+  { name: "Another Site", url: "https://another.com", description: "Description for Another Site" },
+  // 添加更多的友链
+];

@@ -1,6 +1,8 @@
 import type { LIGHT_MODE, DARK_MODE, AUTO_MODE } from "@constants/constants"
+import type { AnyEntryMap } from "astro:content"
 
 export type SiteConfig = {
+  friendsLinks: any
   title: string
   subtitle: string
 

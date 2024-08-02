@@ -46,7 +46,7 @@ const className = Astro.props.class;
       wrapper.appendChild(codeBlock);
       wrapper.appendChild(copyButton);
 
-      let timeout;
+      let timeout: string | number | NodeJS.Timeout | undefined;
       copyButton.addEventListener("click", async () => {
         if (timeout) {
             clearTimeout(timeout);

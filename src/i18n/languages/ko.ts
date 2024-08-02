@@ -1,3 +1,4 @@
+import I18nKey from '../i18nKey'
 import Key from '../i18nKey'
 import type { Translation } from '../translation'
 
@@ -35,4 +36,5 @@ export const ko: Translation = {
   [Key.author]: '저자',
   [Key.publishedAt]: '게시일',
   [Key.license]: '라이선스',
+  [I18nKey.pageNotFound]: ''
 }

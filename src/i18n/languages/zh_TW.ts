@@ -1,3 +1,4 @@
+import I18nKey from '../i18nKey'
 import Key from '../i18nKey'
 import type { Translation } from '../translation'
 
@@ -35,4 +36,5 @@ export const zh_TW: Translation = {
   [Key.author]: '作者',
   [Key.publishedAt]: '發佈於',
   [Key.license]: '許可協議',
+  [I18nKey.pageNotFound]: ''
 }

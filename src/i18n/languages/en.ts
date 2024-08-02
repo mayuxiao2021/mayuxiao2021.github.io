@@ -1,3 +1,4 @@
+import I18nKey from '../i18nKey'
 import Key from '../i18nKey'
 import type { Translation } from '../translation'
 
@@ -35,4 +36,5 @@ export const en: Translation = {
   [Key.author]: 'Author',
   [Key.publishedAt]: 'Published at',
   [Key.license]: 'License',
+  [I18nKey.pageNotFound]: ''
 }

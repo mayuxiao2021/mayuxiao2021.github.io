@@ -7,24 +7,25 @@ import type {
 import { LinkPreset } from './types/config'
 
 export const siteConfig: SiteConfig = {
-  title: 'Fuwari',
-  subtitle: 'Demo Site',
-  lang: 'zh_CN',         // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko'
+  title: '黯',
+  subtitle: 'Blog Site',
+  lang: 'zh_CN', // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko'
   themeColor: {
-    hue: 250,         // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
-    fixed: false,     // Hide the theme color picker for visitors
+    hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
+    fixed: false, // Hide the theme color picker for visitors
   },
   banner: {
-    enable: false,
-    src: 'assets/images/demo-banner.png',   // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+    enable: true,
+    src: 'assets/images/demo-banner.png', // Relative to the /src directory. Relative to the /public directory if it starts with '/'
     position: 'center', // Equivalent to object-position, defaults center
     credit: {
-      enable: false,         // Display the credit text of the banner image
-      text: '',              // Credit text to be displayed
-      url: ''                // (Optional) URL link to the original artwork or artist's page
-    }
+      enable: false, // Display the credit text of the banner image
+      text: '', // Credit text to be displayed
+      url: '', // (Optional) URL link to the original artwork or artist's page
+    },
   },
-  favicon: [    // Leave this array empty to use the default favicon
+  favicon: [
+    // Leave this array empty to use the default favicon
     // {
     //   src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
     //   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
@@ -45,22 +46,22 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.About,
     {
       name: 'GitHub',
-      url: 'https://github.com/mayuxiao2021/mayuxiao2021.github.io',     // Internal links should not include the base path, as it is automatically added
-      external: true,                               // Show an external link icon and will open in a new tab
+      url: 'https://github.com/mayuxiao2021/mayuxiao2021.github.io', // Internal links should not include the base path, as it is automatically added
+      external: true, // Show an external link icon and will open in a new tab
     },
   ],
 }
 
 export const profileConfig: ProfileConfig = {
-  avatar: 'assets/images/demo-avatar.png',  // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-  name: 'Lorem Ipsum',
-  bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  avatar: 'assets/images/demo-avatar.png', // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+  name: '黯',
+  bio: '这里是黯的博客（￣︶￣）↗　.',
   links: [
     {
       name: 'Twitter',
-      icon: 'fa6-brands:twitter',       // Visit https://icones.js.org/ for icon codes
-                                        // You will need to install the corresponding icon set if it's not already included
-                                        // `pnpm add @iconify-json/<icon-set-name>`
+      icon: 'fa6-brands:twitter', // Visit https://icones.js.org/ for icon codes
+      // You will need to install the corresponding icon set if it's not already included
+      // `pnpm add @iconify-json/<icon-set-name>`
       url: 'https://twitter.com',
     },
     {
@@ -83,7 +84,15 @@ export const licenseConfig: LicenseConfig = {
 }
 
 export const FRIENDLY_LINKS = [
-  { name: "Example Site", url: "https://example.com", description: "Description for Example Site" },
-  { name: "Another Site", url: "https://another.com", description: "Description for Another Site" },
+  {
+    name: 'Example Site',
+    url: 'https://example.com',
+    description: 'Description for Example Site',
+  },
+  {
+    name: 'Another Site',
+    url: 'https://another.com',
+    description: 'Description for Another Site',
+  },
   // 添加更多的友链
-];
+]

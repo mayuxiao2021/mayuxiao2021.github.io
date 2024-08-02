@@ -8,7 +8,7 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
@@ -18,5 +18,8 @@
     "quickfix.biome": "always",
     "source.organizeImports.biome": "always"
   },
-  "frontMatter.dashboard.openOnStart": false
+  "frontMatter.dashboard.openOnStart": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }

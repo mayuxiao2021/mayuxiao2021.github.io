@@ -70,3 +70,18 @@ body {
     color: #333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.game-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background-color: #555;
+}

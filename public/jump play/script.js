@@ -1,16 +1,42 @@
 const dino = document.getElementById('dino');
 const scoreDisplay = document.getElementById('score');
+const startButton = document.getElementById('start-button');
+const restartButton = document.getElementById('restart-button');
 let isJumping = false;
 let isGameOver = false;
-const gravity = 0.9;
+let gravity = 0.9;
 let score = 0;
-const speed = 10;
+let speed = 10;
+let obstacleInterval;
+let gameRunning = false;
 
 const jumpSound = new Audio('sounds/jump.mp3');
 const gameOverSound = new Audio('sounds/gameover.mp3');
 const backgroundMusic = new Audio('sounds/background.mp3');
 backgroundMusic.loop = true;
-backgroundMusic.play();
+
+function startGame() {
+    gameRunning = true;
+    isGameOver = false;
+    score = 0;
+    speed = 10;
+    scoreDisplay.innerText = score;
+    startButton.style.display = 'none';
+    restartButton.style.display = 'none';
+    backgroundMusic.play();
+    generateObstacle();
+    document.addEventListener('keydown', control);
+}
+
+function endGame() {
+    isGameOver = true;
+    gameRunning = false;
+    clearInterval(obstacleInterval);
+    gameOverSound.play();
+    backgroundMusic.pause();
+    restartButton.style.display = 'block';
+    alert('Game Over');
+}
 
 function jump() {
     if (isJumping) return;
@@ -18,11 +44,11 @@ function jump() {
     jumpSound.play();
 
     let position = 0;
-    const timerId = setInterval(() => {
+    let timerId = setInterval(() => {
         if (position >= window.innerHeight * 0.2) {
             clearInterval(timerId);
 
-            const downTimerId = setInterval(() => {
+            let downTimerId = setInterval(() => {
                 if (position <= 0) {
                     clearInterval(downTimerId);
                     isJumping = false;
@@ -41,14 +67,14 @@ function jump() {
 
 function generateObstacle() {
     const gameContainer = document.querySelector('.game-container');
-    const obstacle = document.createElement('div');
+    let obstacle = document.createElement('div');
     obstacle.classList.add(Math.random() > 0.5 ? 'cactus' : 'bird');
     gameContainer.appendChild(obstacle);
 
     let obstaclePosition = gameContainer.offsetWidth;
-    const randomTime = Math.random() * 4000;
+    let randomTime = Math.random() * 4000;
 
-    const obstacleInterval = setInterval(() => {
+    obstacleInterval = setInterval(() => {
         if (obstaclePosition < -40) {
             clearInterval(obstacleInterval);
             obstacle.remove();
@@ -65,10 +91,7 @@ function generateObstacle() {
             dino.offsetTop + dino.offsetHeight >= gameContainer.offsetHeight - obstacle.offsetHeight - 20
         ) {
             clearInterval(obstacleInterval);
-            isGameOver = true;
-            gameOverSound.play();
-            alert('Game Over');
-            document.location.reload();
+            endGame();
         }
     }, 20);
 
@@ -76,10 +99,10 @@ function generateObstacle() {
 }
 
 function control(e) {
-    if (e.keyCode === 32) {
+    if (e.keyCode === 32 && gameRunning) {
         jump();
     }
 }
 
-document.addEventListener('keydown', control);
-generateObstacle();
+startButton.addEventListener('click', startGame);
+restartButton.addEventListener('click', startGame);

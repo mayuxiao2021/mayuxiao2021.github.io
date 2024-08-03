@@ -1,0 +1,45 @@
+body {
+        margin: 0;
+            display: flex;
+                justify-content: center;
+                    align-items: center;
+                        height: 100vh;
+                            background-color: #f7f7f7;
+                                font-family: Arial, sans-serif;
+                                }
+
+                                .game-container {
+                                    position: relative;
+                                        width: 90vw;
+                                            max-width: 600px;
+                                                height: 30vh;
+                                                    max-height: 200px;
+                                                        overflow: hidden;
+                                                            border: 2px solid #000;
+                                                                background-color: #fff;
+                                                                }
+
+                                                                #dino {
+                                                                    position: absolute;
+                                                                        bottom: 0;
+                                                                            left: 10%;
+                                                                                width: 5vw;
+                                                                                    max-width: 50px;
+                                                                                        height: 5vw;
+                                                                                            max-height: 50px;
+                                                                                                background-image: url('images/dino.png');
+                                                                                                    background-size: cover;
+                                                                                                    }
+
+                                                                                                    #cactus {
+                                                                                                        position: absolute;
+                                                                                                            bottom: 0;
+                                                                                                                right: -5vw;
+                                                                                                                    width: 2vw;
+                                                                                                                        max-width: 20px;
+                                                                                                                            height: 5vw;
+                                                                                                                                max-height: 50px;
+                                                                                                                                    background-image: url('images/cactus.png');
+                                                                                                                                        background-size: cover;
+                                                                                                                                        }
+                                                                                                                                        

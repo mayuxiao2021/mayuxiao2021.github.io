@@ -90,8 +90,8 @@ export const FRIENDLY_LINKS = [
     description: '类似于钢琴块，但是明卓',
   },
   {
-    name: '',
-    url: 'https://another.com',
+    name: '明卓跑酷',
+    url: 'https://',
     description: 'Description for Another Site',
   },
   // 添加更多的友链

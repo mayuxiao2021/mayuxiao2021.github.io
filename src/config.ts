@@ -85,12 +85,12 @@ export const licenseConfig: LicenseConfig = {
 
 export const FRIENDLY_LINKS = [
   {
-    name: 'Example Site',
-    url: 'https://example.com',
-    description: 'Description for Example Site',
+    name: '吃掉明卓',
+    url: 'https://github.glmyx.eu.org/EatKun-main/index.html',
+    description: '类似于钢琴块，但是明卓',
   },
   {
-    name: 'Another Site',
+    name: '',
     url: 'https://another.com',
     description: 'Description for Another Site',
   },

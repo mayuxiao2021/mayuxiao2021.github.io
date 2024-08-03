@@ -1,45 +1,72 @@
 body {
-        margin: 0;
-            display: flex;
-                justify-content: center;
-                    align-items: center;
-                        height: 100vh;
-                            background-color: #f7f7f7;
-                                font-family: Arial, sans-serif;
-                                }
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to top, #87CEEB, #fff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-                                .game-container {
-                                    position: relative;
-                                        width: 90vw;
-                                            max-width: 600px;
-                                                height: 30vh;
-                                                    max-height: 200px;
-                                                        overflow: hidden;
-                                                            border: 2px solid #000;
-                                                                background-color: #fff;
-                                                                }
+.game-container {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+    height: 30vh;
+    max-height: 200px;
+    overflow: hidden;
+    border: 2px solid #000;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
 
-                                                                #dino {
-                                                                    position: absolute;
-                                                                        bottom: 0;
-                                                                            left: 10%;
-                                                                                width: 5vw;
-                                                                                    max-width: 50px;
-                                                                                        height: 5vw;
-                                                                                            max-height: 50px;
-                                                                                                background-image: url('images/dino.png');
-                                                                                                    background-size: cover;
-                                                                                                    }
+#ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+    background-image: url('images/ground.png');
+    background-size: cover;
+}
 
-                                                                                                    #cactus {
-                                                                                                        position: absolute;
-                                                                                                            bottom: 0;
-                                                                                                                right: -5vw;
-                                                                                                                    width: 2vw;
-                                                                                                                        max-width: 20px;
-                                                                                                                            height: 5vw;
-                                                                                                                                max-height: 50px;
-                                                                                                                                    background-image: url('images/cactus.png');
-                                                                                                                                        background-size: cover;
-                                                                                                                                        }
-                                                                                                                                        
+#dino {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 5vw;
+    max-width: 70px;
+    height: auto;
+    background-image: url('images/dino.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.cactus, .bird {
+    position: absolute;
+    bottom: 10%;
+    width: 2vw;
+    max-width: 40px;
+    height: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.cactus {
+    right: -5vw;
+    background-image: url('images/cactus.png');
+}
+
+.bird {
+    bottom: 30%;
+    right: -5vw;
+    background-image: url('images/bird.png');
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: #333;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

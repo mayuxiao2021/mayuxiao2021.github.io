@@ -1,77 +1,85 @@
-const dino = document.getElementById('dino')
-let isJumping = false
-let isGameOver = false
-// biome-ignore lint/style/useConst: <explanation>
-let gravity = 0.9
+const dino = document.getElementById('dino');
+const scoreDisplay = document.getElementById('score');
+let isJumping = false;
+let isGameOver = false;
+const gravity = 0.9;
+let score = 0;
+const speed = 10;
+
+const jumpSound = new Audio('sounds/jump.mp3');
+const gameOverSound = new Audio('sounds/gameover.mp3');
+const backgroundMusic = new Audio('sounds/background.mp3');
+backgroundMusic.loop = true;
+backgroundMusic.play();
 
 function jump() {
-  if (isJumping) return
-  isJumping = true
+    if (isJumping) return;
+    isJumping = true;
+    jumpSound.play();
 
-  let position = 0
-  // biome-ignore lint/style/useConst: <explanation>
-  let timerId = setInterval(() => {
-    if (position >= window.innerHeight * 0.2) {
-      clearInterval(timerId)
+    let position = 0;
+    const timerId = setInterval(() => {
+        if (position >= window.innerHeight * 0.2) {
+            clearInterval(timerId);
 
-      // biome-ignore lint/style/useConst: <explanation>
-      let downTimerId = setInterval(() => {
-        if (position <= 0) {
-          clearInterval(downTimerId)
-          isJumping = false
+            const downTimerId = setInterval(() => {
+                if (position <= 0) {
+                    clearInterval(downTimerId);
+                    isJumping = false;
+                }
+                position -= 5;
+                position = position * gravity;
+                dino.style.bottom = `${10 + position}%`;
+            }, 20);
         }
-        position -= 5
-        position = position * gravity
-        dino.style.bottom = `${position}px`
-      }, 20)
-    }
 
-    position += 30
-    position = position * gravity
-    dino.style.bottom = `${position}px`
-  }, 20)
+        position += 30;
+        position = position * gravity;
+        dino.style.bottom = `${10 + position}%`;
+    }, 20);
 }
 
-function generateCactus() {
-  // biome-ignore lint/style/useConst: <explanation>
-  let cactus = document.createElement('div')
-  cactus.classList.add('cactus')
-  document.querySelector('.game-container').appendChild(cactus)
-  let cactusPosition = document.querySelector('.game-container').offsetWidth
-  // biome-ignore lint/style/useConst: <explanation>
-  let randomTime = Math.random() * 4000
+function generateObstacle() {
+    const gameContainer = document.querySelector('.game-container');
+    const obstacle = document.createElement('div');
+    obstacle.classList.add(Math.random() > 0.5 ? 'cactus' : 'bird');
+    gameContainer.appendChild(obstacle);
 
-  // biome-ignore lint/style/useConst: <explanation>
-  let cactusInterval = setInterval(() => {
-    if (cactusPosition < -cactus.offsetWidth) {
-      clearInterval(cactusInterval)
-      cactus.remove()
-    }
+    let obstaclePosition = gameContainer.offsetWidth;
+    const randomTime = Math.random() * 4000;
 
-    cactusPosition -= 10
-    cactus.style.left = `${cactusPosition}px`
+    const obstacleInterval = setInterval(() => {
+        if (obstaclePosition < -40) {
+            clearInterval(obstacleInterval);
+            obstacle.remove();
+            score++;
+            scoreDisplay.innerText = score;
+        }
 
-    if (
-      cactusPosition > 0 &&
-      cactusPosition < 10 + dino.offsetWidth &&
-      dino.offsetTop + dino.offsetHeight >=
-        document.querySelector('.game-container').offsetHeight -
-          cactus.offsetHeight
-    ) {
-      clearInterval(cactusInterval)
-      isGameOver = true
-      alert('Game Over')
-    }
-  }, 20)
+        obstaclePosition -= speed;
+        obstacle.style.left = `${obstaclePosition}px`;
 
-  if (!isGameOver) setTimeout(generateCactus, randomTime)
+        if (
+            obstaclePosition > 0 &&
+            obstaclePosition < 10 + dino.offsetWidth &&
+            dino.offsetTop + dino.offsetHeight >= gameContainer.offsetHeight - obstacle.offsetHeight - 20
+        ) {
+            clearInterval(obstacleInterval);
+            isGameOver = true;
+            gameOverSound.play();
+            alert('Game Over');
+            document.location.reload();
+        }
+    }, 20);
+
+    if (!isGameOver) setTimeout(generateObstacle, randomTime);
 }
 
 function control(e) {
-  if (e.keyCode === 32) {
-    jump()
-  }
+    if (e.keyCode === 32) {
+        jump();
+    }
 }
 
-document.addEventListener('keydown', control)
-generateCactus()
+document.addEventListener('keydown', control);
+generateObstacle();

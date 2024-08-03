@@ -91,8 +91,8 @@ export const FRIENDLY_LINKS = [
   },
   {
     name: '明卓跑酷',
-    url: 'https://',
-    description: 'Description for Another Site',
+    url: 'https://github.glmyx.eu.org/jump play/index.html',
+    description: '一个没完成的小游戏',
   },
   // 添加更多的友链
 ]

@@ -58,17 +58,13 @@ const hasBannerLink = !!siteConfig.banner.credit.url
     </div>
     <BackToTop></BackToTop>
 </div>
-
-<button class="background-button" onclick="changeBackground()">更换背景</button>
-
-<script>
+<script> 
 import { getRandomBackground } from "@utils/getRandomBackground";
-
-  function changeBackground() {
-    document.querySelector('div[style]').style.backgroundImage = `url(${getRandomBackground()})`;
+    function changeBackground() {
+    document.getElementsByTagName("ImageWrapper")[0].setAttribute("src", getRandomBackground());
   }
 </script>
-
+<button class="background-button" onclick="changeBackground()">更换背景</button>
 <style>
   .background-button {
     position: fixed;

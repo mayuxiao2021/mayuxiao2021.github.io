@@ -161,6 +161,7 @@ import {
 } from 'overlayscrollbars';
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 import {pathsEqual, url} from "../utils/url-utils";
+import { getRandomBackground } from '@utils/getRandomBackground';
 
 	/* Preload fonts */
 // (async function() {
@@ -205,7 +206,9 @@ function disableAnimation() {
 	}
 }
 */
-
+function changeBackground() {
+    document.getElementsByTagName("ImageWrapper")[0].setAttribute("src", getRandomBackground());
+  }
 function setClickOutsideToClose(panel: string, ignores: string[]) {
 	document.addEventListener("click", event => {
 		let panelDom = document.getElementById(panel);

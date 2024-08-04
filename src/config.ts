@@ -32,11 +32,6 @@ export const siteConfig: SiteConfig = {
     //   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
     // }
   ],
-  friendsLinks: [
-    { name: 'Friend 1', url: 'https://example.com' },
-    { name: 'Friend 2', url: 'https://example.com' },
-    { name: 'Friend 3', url: 'https://example.com' },
-  ],
 }
 
 export const navBarConfig: NavBarConfig = {

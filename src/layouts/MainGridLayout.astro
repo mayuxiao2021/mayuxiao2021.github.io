@@ -3,10 +3,9 @@ import Footer from '@components/Footer.astro'
 import Navbar from '@components/Navbar.astro'
 import BackToTop from '@components/control/BackToTop.astro'
 import SideBar from '@components/widget/SideBar.astro'
-import I18nKey from '@i18n/i18nKey'
-import { i18n } from '@i18n/translation'
 import { Icon } from 'astro-icon/components'
 import { siteConfig } from '../config'
+import { getRandomBackground } from '../utils/getRandomBackground'
 import Layout from './Layout.astro'
 
 interface Props {
@@ -59,4 +58,28 @@ const hasBannerLink = !!siteConfig.banner.credit.url
     </div>
     <BackToTop></BackToTop>
 </div>
+
+<button class="background-button" onclick="changeBackground()">更换背景</button>
+
+<script>
+import { getRandomBackground } from "@utils/getRandomBackground";
+
+  function changeBackground() {
+    document.querySelector('div[style]').style.backgroundImage = `url(${getRandomBackground()})`;
+  }
+</script>
+
+<style>
+  .background-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
 </Layout>

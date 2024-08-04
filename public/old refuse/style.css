@@ -5,21 +5,18 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(to top, #87CEEB, #fff);
+    background: linear-gradient(to top, #ffffff, #fff);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
 .game-container {
     position: relative;
-    width: 90vw;
-    max-width: 800px;
-    height: 30vh;
-    max-height: 200px;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
-    border: 2px solid #000;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(255, 255, 255);
 }
 
 #ground {
@@ -36,8 +33,7 @@ body {
     bottom: 10%;
     left: 10%;
     width: 5vw;
-    max-width: 70px;
-    height: auto;
+    height: 5vw;
     background-image: url('images/dino.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -47,8 +43,7 @@ body {
     position: absolute;
     bottom: 10%;
     width: 2vw;
-    max-width: 40px;
-    height: auto;
+    height: 2vw;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -65,7 +60,8 @@ body {
 }
 
 .score {
-    margin-top: 20px;
+    position: absolute;
+    top: 10px;
     font-size: 2rem;
     color: #333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

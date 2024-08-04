@@ -4,7 +4,7 @@ const startButton = document.getElementById('start-button')
 const restartButton = document.getElementById('restart-button')
 let isJumping = false
 let isGameOver = false
-const gravity = 0.9
+const gravity = 0.3
 let score = 0
 let speed = 10
 let gameRunning = false
@@ -47,7 +47,7 @@ function jump() {
   const jumpInterval = 20 // 常量，跳跃间隔时间
 
   const timerId = setInterval(() => {
-    if (position >= window.innerHeight * 0.2) {
+    if (position >= window.innerHeight * 0.1) {
       clearInterval(timerId)
 
       const downTimerId = setInterval(() => {
@@ -61,7 +61,7 @@ function jump() {
       }, jumpInterval)
     }
 
-    position += 30
+    position += 20
     position = position * gravity
     dino.style.bottom = `${10 + position}%`
   }, jumpInterval)
@@ -102,7 +102,7 @@ function generateObstacle() {
 }
 
 function control(e) {
-  if (e.keyCode === 32 && gameRunning) {
+  if (e.keyCode === 32) {
     jump()
   }
 }

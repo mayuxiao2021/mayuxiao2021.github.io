@@ -81,12 +81,12 @@ export const licenseConfig: LicenseConfig = {
 export const FRIENDLY_LINKS = [
   {
     name: '吃掉明卓',
-    url: 'https://github.glmyx.eu.org/EatKun-main/index.html',
+    url: '/EatKun-main/index.html',
     description: '类似于钢琴块，但是明卓',
   },
   {
     name: '明卓跑酷',
-    url: 'https://github.glmyx.eu.org/jump play/index.html',
+    url: '/jump play/index.html',
     description: '一个没完成的小游戏',
   },
   // 添加更多的友链

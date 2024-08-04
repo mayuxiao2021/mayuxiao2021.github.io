@@ -16,7 +16,7 @@ export const siteConfig: SiteConfig = {
   },
   banner: {
     enable: true,
-    src: 'assets/images/demo-banner.png', // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+    src: 'src/assets/images/banners', //不要在地址最后部分添加'/', Relative to the /src directory. Relative to the /public directory if it starts with '/'
     position: 'center', // Equivalent to object-position, defaults center
     credit: {
       enable: false, // Display the credit text of the banner image

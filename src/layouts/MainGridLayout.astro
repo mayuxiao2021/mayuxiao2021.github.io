@@ -1,24 +1,24 @@
 ---
-import Footer from '@components/Footer.astro';
-import Navbar from '@components/Navbar.astro';
-import BackToTop from '@components/control/BackToTop.astro';
-import SideBar from '@components/widget/SideBar.astro';
-import Layout from './Layout.astro';
-import { Icon } from 'astro-icon/components';
-import { siteConfig } from '../config';
-import I18nKey from '@i18n/i18nKey';
-import { i18n } from '@i18n/translation';
+import Footer from '@components/Footer.astro'
+import Navbar from '@components/Navbar.astro'
+import BackToTop from '@components/control/BackToTop.astro'
+import SideBar from '@components/widget/SideBar.astro'
+import I18nKey from '@i18n/i18nKey'
+import { i18n } from '@i18n/translation'
+import { Icon } from 'astro-icon/components'
+import { siteConfig } from '../config'
+import Layout from './Layout.astro'
 
 interface Props {
-  title?: string;
-  banner?: string;
-  description?: string;
+  title?: string
+  banner?: string
+  description?: string
 }
 
-const { title, banner, description } = Astro.props;
-const hasBannerCredit = siteConfig.banner.enable && siteConfig.banner.credit.enable;
-const hasBannerLink = !!(siteConfig.banner.credit.url);
-const friendsLinks = siteConfig.friendsLinks;
+const { title, banner, description } = Astro.props
+const hasBannerCredit =
+  siteConfig.banner.enable && siteConfig.banner.credit.enable
+const hasBannerLink = !!siteConfig.banner.credit.url
 ---
 
 <Layout title={title} banner={banner} description={description}>

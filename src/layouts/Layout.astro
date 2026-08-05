@@ -155,18 +155,8 @@ const siteLang = siteConfig.lang.replace('_', '-')
 @tailwind utilities;
 
 @layer components {
-	.enable-banner.is-home #banner-wrapper {
-		@apply h-[var(--banner-height)] md:h-[var(--banner-height-home)]
-	}
-	.enable-banner #banner-wrapper {
-		@apply h-[var(--banner-height)]
-	}
-
-	.enable-banner.is-home #top-row {
-		@apply h-[calc(var(--banner-height)_-_4.5rem)] md:h-[calc(var(--banner-height-home)_-_4.5rem)]
-	}
 	.enable-banner #top-row {
-		@apply h-[calc(var(--banner-height)_-_4.5rem)]
+		@apply h-auto
 	}
 }
 </style>

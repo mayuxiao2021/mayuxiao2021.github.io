@@ -127,19 +127,16 @@ const siteLang = siteConfig.lang.replace('_', '-')
 			<div class="absolute -bottom-40 left-1/3 w-72 h-72 rounded-full opacity-30 animate-[float_12s_ease-in-out_2s_infinite]" style="background: radial-gradient(circle, oklch(0.7 0.15 calc(var(--hue) + 240) / 0.2), transparent 70%);"></div>
 		</div>
 		<ConfigCarrier></ConfigCarrier>
-		<ConfigCarrier></ConfigCarrier>
 		<GlobalStyles>
-		<div id="banner-wrapper" class="absolute w-full transition-all duration-700">
-			<ImageWrapper id="boxtest" alt="Banner image of the blog" class:list={["object-cover h-full", {"hidden": !siteConfig.banner.enable}]}
-					  src={getRandomBackground()} position={siteConfig.banner.position}
-			>
-			</ImageWrapper>
-			{enableBanner && (
-				<button id="banner-switch" title="切换背景" class="absolute bottom-4 right-4 z-20 btn-regular w-9 h-9 rounded-lg active:scale-90 opacity-60 hover:opacity-100 transition-opacity">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-auto" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280Zm200-200q0-83-58.5-141.5T480-680q-17 0-28.5-11.5T440-720v-240q0-17 11.5-28.5T480-1000q83 0 141.5 58.5T680-800q0 17-11.5 28.5T640-760q-17 0-28.5-11.5T600-800q0-42-26-74t-66-39v107q78 11 132.5 63.5T710-596q6 22-1 46.5T685-512q-5 2-10.5 3t-10.5 1q-92 0-156 64t-64 156q0 5 1 10.5t3 10.5q13 23-12.5 50.5T388-195q-38-8-65-30t-39-55Zm-160 40v-120q0-18 9-29t21-15l220-220q5-5 13-5t13 5l34 34q5 5 5 12t-5 12L612-544l46 31q14 9 15 26t-13 28L540-340l80 80-120 120-200-200-80 80h120Zm160-260Z"/></svg>
-				</button>
-			)}
-		</div>
+		<div id="bg-overlay" class="fixed inset-0 z-0 opacity-30 dark:opacity-20 bg-black pointer-events-none"></div>
+		{enableBanner && <div id="full-bg" class="fixed inset-0 z-[-1] transition-all duration-1000"
+			style={`background: url(${getRandomBackground()}) center/cover no-repeat;`}
+		></div>}
+		{enableBanner && (
+			<button id="banner-switch" title="切换背景" class="fixed bottom-6 right-6 z-30 btn-regular w-10 h-10 rounded-full active:scale-90 opacity-40 hover:opacity-80 transition-all shadow-lg backdrop-blur-sm bg-white/20 dark:bg-black/20">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-auto" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280Zm200-200q0-83-58.5-141.5T480-680q-17 0-28.5-11.5T440-720v-240q0-17 11.5-28.5T480-1000q83 0 141.5 58.5T680-800q0 17-11.5 28.5T640-760q-17 0-28.5-11.5T600-800q0-42-26-74t-66-39v107q78 11 132.5 63.5T710-596q6 22-1 46.5T685-512q-5 2-10.5 3t-10.5 1q-92 0-156 64t-64 156q0 5 1 10.5t3 10.5q13 23-12.5 50.5T388-195q-38-8-65-30t-39-55Zm-160 40v-120q0-18 9-29t21-15l220-220q5-5 13-5t13 5l34 34q5 5 5 12t-5 12L612-544l46 31q14 9 15 26t-13 28L540-340l80 80-120 120-200-200-80 80h120Zm160-260Z"/></svg>
+			</button>
+		)}
 		<script is:inline define:vars={{ bannerList }}>
 			window.__BANNERS__ = JSON.parse(bannerList);
 		</script>
@@ -229,14 +226,13 @@ function disableAnimation() {
 }
 */
 function changeBackground() {
-	const img = document.querySelector('#banner-wrapper img');
-	if (!img || !window.__BANNERS__?.length) return;
-	const current = img.getAttribute('src');
+	const el = document.getElementById('full-bg');
+	if (!el || !window.__BANNERS__?.length) return;
+	const current = el.style.backgroundImage;
 	let next;
 	do { next = window.__BANNERS__[Math.floor(Math.random() * window.__BANNERS__.length)]; }
-	while (next === current && window.__BANNERS__.length > 1);
-	img.setAttribute('src', next);
-	img.setAttribute('srcset', next);
+	while (current && current.includes(next) && window.__BANNERS__.length > 1);
+	el.style.backgroundImage = 'url(' + next + ')';
 }
 document.getElementById('banner-switch')?.addEventListener('click', changeBackground);
 document.addEventListener('astro:after-swap', () => {

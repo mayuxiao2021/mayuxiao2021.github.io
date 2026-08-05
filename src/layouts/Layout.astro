@@ -40,6 +40,13 @@ if (!banner || typeof banner !== 'string' || banner.trim() === '') {
 // TODO don't use post cover as banner for now
 banner = getRandomBackground()
 
+// Pre-compute all banner URLs for client-side switching
+import fs from 'node:fs'
+import path from 'node:path'
+const bannersDir = path.join(process.cwd(), `/public/${siteConfig.banner.src}`)
+const bannerList = JSON.stringify(fs.readdirSync(bannersDir).map(f => `/${siteConfig.banner.src}/${f}`))
+const allBanners = JSON.parse(bannerList) as string[]
+
 const enableBanner = siteConfig.banner.enable
 
 let pageTitle: string
@@ -120,7 +127,15 @@ const siteLang = siteConfig.lang.replace('_', '-')
 					  src={getRandomBackground()} position={siteConfig.banner.position}
 			>
 			</ImageWrapper>
+			{enableBanner && (
+				<button id="banner-switch" title="切换背景" class="absolute bottom-4 right-4 z-20 btn-regular w-9 h-9 rounded-lg active:scale-90 opacity-60 hover:opacity-100 transition-opacity">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-auto" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280Zm200-200q0-83-58.5-141.5T480-680q-17 0-28.5-11.5T440-720v-240q0-17 11.5-28.5T480-1000q83 0 141.5 58.5T680-800q0 17-11.5 28.5T640-760q-17 0-28.5-11.5T600-800q0-42-26-74t-66-39v107q78 11 132.5 63.5T710-596q6 22-1 46.5T685-512q-5 2-10.5 3t-10.5 1q-92 0-156 64t-64 156q0 5 1 10.5t3 10.5q13 23-12.5 50.5T388-195q-38-8-65-30t-39-55Zm-160 40v-120q0-18 9-29t21-15l220-220q5-5 13-5t13 5l34 34q5 5 5 12t-5 12L612-544l46 31q14 9 15 26t-13 28L540-340l80 80-120 120-200-200-80 80h120Zm160-260Z"/></svg>
+				</button>
+			)}
 		</div>
+		<script is:inline define:vars={{ bannerList }}>
+			window.__BANNERS__ = JSON.parse(bannerList);
+		</script>
 		<slot />
 		</GlobalStyles>
 	</body>
@@ -207,8 +222,19 @@ function disableAnimation() {
 }
 */
 function changeBackground() {
-    document.getElementsByTagName("ImageWrapper")[0].setAttribute("src", getRandomBackground());
-  }
+	const img = document.querySelector('#banner-wrapper img');
+	if (!img || !window.__BANNERS__?.length) return;
+	const current = img.getAttribute('src');
+	let next;
+	do { next = window.__BANNERS__[Math.floor(Math.random() * window.__BANNERS__.length)]; }
+	while (next === current && window.__BANNERS__.length > 1);
+	img.setAttribute('src', next);
+	img.setAttribute('srcset', next);
+}
+document.getElementById('banner-switch')?.addEventListener('click', changeBackground);
+document.addEventListener('astro:after-swap', () => {
+	document.getElementById('banner-switch')?.addEventListener('click', changeBackground);
+});
 function setClickOutsideToClose(panel: string, ignores: string[]) {
 	document.addEventListener("click", event => {
 		let panelDom = document.getElementById(panel);

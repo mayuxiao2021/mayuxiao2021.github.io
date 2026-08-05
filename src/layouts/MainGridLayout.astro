@@ -5,7 +5,6 @@ import BackToTop from '@components/control/BackToTop.astro'
 import SideBar from '@components/widget/SideBar.astro'
 import { Icon } from 'astro-icon/components'
 import { siteConfig } from '../config'
-import { getRandomBackground } from '../utils/getRandomBackground'
 import Layout from './Layout.astro'
 
 interface Props {
@@ -58,24 +57,4 @@ const hasBannerLink = !!siteConfig.banner.credit.url
     </div>
     <BackToTop></BackToTop>
 </div>
-<script> 
-import { getRandomBackground } from "@utils/getRandomBackground";
-    function changeBackground() {
-    document.getElementsByTagName("ImageWrapper")[0].setAttribute("src", getRandomBackground());
-  }
-</script>
-<button class="background-button" onclick="changeBackground()">更换背景</button>
-<style>
-  .background-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-</style>
 </Layout>

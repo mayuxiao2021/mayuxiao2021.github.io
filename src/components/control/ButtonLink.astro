@@ -3,10 +3,11 @@ interface Props {
     badge?: string
     url?: string
     label?: string
+    external?: boolean
 }
-const { badge, url, label } = Astro.props
+const { badge, url, label, external = false } = Astro.props
 ---
-<a href={url} aria-label={label}>
+<a href={url} aria-label={label} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} data-no-swup={external ? '' : undefined}>
     <button
         class:list={`
             w-full

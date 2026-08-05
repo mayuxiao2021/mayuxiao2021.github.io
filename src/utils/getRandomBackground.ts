@@ -6,7 +6,7 @@ export function getRandomBackground(): string {
     process.cwd(),
     `/public/${siteConfig.banner.src}`,
   )
-  const files = fs.readdirSync(backgroundsDir)
+  const files = fs.readdirSync(backgroundsDir).filter(f => /\.(png|jpg|jpeg|webp|avif)$/i.test(f))
   const randomFile = files[Math.floor(Math.random() * files.length)]
   return `/${siteConfig.banner.src}/${randomFile}`
 }
@@ -15,7 +15,7 @@ export function getBackground(): string {
     process.cwd(),
     `/public/${siteConfig.banner.src}`,
   )
-  const files = fs.readdirSync(backgroundsDir)
+  const files = fs.readdirSync(backgroundsDir).filter(f => /\.(png|jpg|jpeg|webp|avif)$/i.test(f))
   const FileTree = files[Math.floor(Math.random() * files.length)]
   return `/${siteConfig.banner.src}/${FileTree}`
 }

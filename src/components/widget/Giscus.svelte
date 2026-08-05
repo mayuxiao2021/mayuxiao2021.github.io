@@ -5,14 +5,14 @@
   // 前往 https://giscus.app/ 获取以下参数
   const GISCUS_CONFIG = {
     repo: 'mayuxiao2021/mayuxiao2021.github.io',   // 格式: 用户名/仓库名
-    repoId: '',        // 你的 repo_id
+    repoId: 'R_kgDOMV2rRA',
     category: 'Announcements',
-    categoryId: '',    // 你的 category_id
+    categoryId: 'DIC_kwDOMV2rRM4DCuID',
     mapping: 'pathname',
     strict: '0',
     reactionsEnabled: '1',
     emitMetadata: '0',
-    inputPosition: 'bottom',
+    inputPosition: 'top',
     lang: 'zh-CN',
   };
 

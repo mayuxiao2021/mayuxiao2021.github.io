@@ -1,0 +1,30 @@
+---
+import WidgetLayout from "./WidgetLayout.astro";
+import ButtonLink from "../control/ButtonLink.astro";
+import { FRIENDLY_LINKS } from "../../config";
+
+const COLLAPSED_HEIGHT = "7.5rem";
+const COLLAPSE_THRESHOLD = 5;
+
+const isCollapsed = FRIENDLY_LINKS.length >= COLLAPSE_THRESHOLD;
+
+interface Props {
+    class?: string;
+    style?: string;
+}
+const className = Astro.props.class;
+const style = Astro.props.style;
+---
+
+<WidgetLayout name="Friendly Links" id="links" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
+                class={className} style={style}
+>
+    {FRIENDLY_LINKS.map((link) =>
+        <ButtonLink
+            url={link.url}
+            label={`Visit ${link.name}`}
+        >
+            {link.name}
+        </ButtonLink>
+    )}
+</WidgetLayout>

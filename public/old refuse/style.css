@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to top, #ffffff, #fff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgb(255, 255, 255);
+}
+
+#ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+    background-image: url('images/ground.png');
+    background-size: cover;
+}
+
+#dino {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 5vw;
+    height: 5vw;
+    background-image: url('images/dino.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.cactus, .bird {
+    position: absolute;
+    bottom: 10%;
+    width: 2vw;
+    height: 2vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.cactus {
+    right: -5vw;
+    background-image: url('images/cactus.png');
+}
+
+.bird {
+    bottom: 30%;
+    right: -5vw;
+    background-image: url('images/bird.png');
+}
+
+.score {
+    position: absolute;
+    top: 10px;
+    font-size: 2rem;
+    color: #333;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background-color: #555;
+}

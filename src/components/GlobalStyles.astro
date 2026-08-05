@@ -184,7 +184,18 @@ color_set({
 
 @layer components {
     .card-base {
-        @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
+        @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition shadow-lg shadow-black/[0.03] dark:shadow-black/20;
+    }
+    .card-glass {
+        @apply rounded-[var(--radius-large)] overflow-hidden transition shadow-xl shadow-black/[0.05] dark:shadow-black/20;
+        background: rgba(255,255,255,0.6) !important;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    .dark .card-glass {
+        background: rgba(30,30,40,0.6) !important;
+        border-color: rgba(255,255,255,0.06);
     }
     h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, blockquote, code, pre, table, th, td, strong {
         @apply transition;
@@ -293,26 +304,29 @@ color_set({
         opacity: 1;
     }
 }
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+}
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
 .onload-animation {
     opacity: 0;
     animation: 300ms fade-in-up;
     animation-fill-mode: forwards;
 }
-#navbar {
-    animation-delay: 0ms
-}
-#sidebar {
-    animation-delay: 100ms
-}
-#content-wrapper {
-    animation-delay: var(--content-delay);
-}
-#footer {
-    animation-delay: 400ms;
-}
-#banner-credit {
-    animation-delay: 400ms;
-}
+#navbar { animation-delay: 0ms }
+#sidebar { animation-delay: 100ms }
+#content-wrapper { animation-delay: var(--content-delay); }
+#footer { animation-delay: 400ms; }
+#banner-credit { animation-delay: 400ms; }
 
 
 </style>

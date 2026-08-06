@@ -1,1 +1,0 @@
-import"./ko.4L-rNdti.js";function c(r,e){return r.replace(/^\/|\/$/g,"").toLowerCase()===e.replace(/^\/|\/$/g,"").toLowerCase()}function r(...r){return r.join("/").replace(/\/+/g,"/")}function s(e){return r("","/",e)}export{c as p,s as u};

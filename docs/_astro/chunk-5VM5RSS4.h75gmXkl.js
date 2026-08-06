@@ -1,1 +1,0 @@
-import{_ as e}from"./mermaid.core.DUNLOHPh.js";var l=e(()=>"\n  /* Font Awesome icon styling - consolidated */\n  .label-icon {\n    display: inline-block;\n    height: 1em;\n    overflow: visible;\n    vertical-align: -0.125em;\n  }\n  \n  .node .label-icon path {\n    fill: currentColor;\n    stroke: revert;\n    stroke-width: revert;\n  }\n","getIconStyles");export{l as g};

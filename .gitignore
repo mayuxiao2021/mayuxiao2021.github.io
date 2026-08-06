@@ -1,4 +1,5 @@
-# build output (now committed as docs/ for GitHub Pages)
+# build output
+dist/
 # generated types
 .astro/
 

@@ -1,1 +1,0 @@
-import{_ as a,d as o}from"./mermaid.core.DUNLOHPh.js";var d=a((e,a)=>{let d;return"sandbox"===a&&(d=o("#i"+e)),o("sandbox"===a?d.nodes()[0].contentDocument.body:"body").select(`[id="${e}"]`)},"getDiagramElement");export{d as g};

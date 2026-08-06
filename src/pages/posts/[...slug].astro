@@ -20,7 +20,7 @@ export async function getStaticPaths() {
     return import.meta.env.PROD ? data.draft !== true : true
   })
   return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id.replace(/\/index$/, '') },
     props: { entry },
   }))
 }
@@ -101,7 +101,7 @@ const jsonLd = {
                 <Content />
             </Markdown>
 
-            {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
+            {licenseConfig.enable && <License title={entry.data.title} slug={entry.id.replace(/\/index$/, '')} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
             <!-- Giscus Comments -->
             <div class="onload-animation" style="animation-delay: calc(var(--content-delay) + 375ms)">

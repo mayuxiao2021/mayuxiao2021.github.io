@@ -31,5 +31,8 @@ export function getDir(path: string): string {
 }
 
 export function url(path: string) {
-  return joinUrl('', import.meta.env.BASE_URL, path)
+  // import.meta.env.BASE_URL can be contaminated by shell environment
+  const base = import.meta.env.BASE_URL
+  const cleanBase = base && base !== '/' && base.startsWith('/') ? base : '/'
+  return joinUrl('', cleanBase, path)
 }

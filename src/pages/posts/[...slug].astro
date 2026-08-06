@@ -1,6 +1,6 @@
 ---
 import path from 'node:path'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import License from '@components/misc/License.astro'
 import Markdown from '@components/misc/Markdown.astro'
 import Giscus from '@components/widget/Giscus.svelte'
@@ -26,9 +26,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
-
-const { remarkPluginFrontmatter } = await entry.render()
+const { Content, remarkPluginFrontmatter } = await render(entry)
 
 const jsonLd = {
   '@context': 'https://schema.org',

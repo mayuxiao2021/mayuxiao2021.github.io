@@ -3,6 +3,7 @@ import GlobalStyles from '@components/GlobalStyles.astro'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
+import 'katex/dist/katex.min.css'
 import { profileConfig, siteConfig } from '@/config'
 import ConfigCarrier from '@components/ConfigCarrier.astro'
 import ImageWrapper from '@components/misc/ImageWrapper.astro'
@@ -14,16 +15,17 @@ import {
 } from '../constants/constants'
 import { defaultFavicons } from '../constants/icon'
 import type { Favicon } from '../types/config'
-import { getRandomBackground } from '../utils/getRandomBackground'
 import { url, pathsEqual } from '../utils/url-utils'
 
 interface Props {
   title?: string
   banner?: string
   description?: string
+  image?: string
+  published?: Date
 }
 
-let { title, banner, description } = Astro.props
+let { title, banner, description, image, published } = Astro.props
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -33,19 +35,18 @@ const isHomePage = pathsEqual(Astro.url.pathname, url('/'))
 // defines global css variables
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue
+// Pre-compute all banner URLs for client-side switching
+const bannerFiles = import.meta.glob('/public/banners/*', { eager: true, query: '?url' })
+const allBanners = Object.keys(bannerFiles).map(f => f.replace('/public', '')) as string[]
+const bannerList = JSON.stringify(allBanners)
+const pickRandomBanner = () => allBanners[Math.floor(Math.random() * allBanners.length)] || '/banners/demo-banner.webp'
+
 if (!banner || typeof banner !== 'string' || banner.trim() === '') {
-  banner = getRandomBackground()
+  banner = pickRandomBanner()
 }
 
 // TODO don't use post cover as banner for now
-banner = getRandomBackground()
-
-// Pre-compute all banner URLs for client-side switching
-import fs from 'node:fs'
-import path from 'node:path'
-const bannersDir = path.join(process.cwd(), `/public/${siteConfig.banner.src}`)
-const bannerList = JSON.stringify(fs.readdirSync(bannersDir).map(f => `/${siteConfig.banner.src}/${f}`))
-const allBanners = JSON.parse(bannerList) as string[]
+banner = pickRandomBanner()
 
 const enableBanner = siteConfig.banner.enable
 
@@ -60,6 +61,19 @@ const favicons: Favicon[] =
   siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons
 
 const siteLang = siteConfig.lang.replace('_', '-')
+
+const jsonLd = isHomePage ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteConfig.title,
+  url: Astro.site,
+} : published ? {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  datePublished: published.toISOString(),
+  author: { '@type': 'Person', name: profileConfig.name },
+} : null
 ---
 
 <!DOCTYPE html>
@@ -76,14 +90,18 @@ const siteLang = siteConfig.lang.replace('_', '-')
 		<meta property="og:url" content={Astro.url}>
 		<meta property="og:title" content={pageTitle}>
 		<meta property="og:description" content={description || pageTitle}>
+		<meta property="og:type" content={isHomePage ? 'website' : 'article'}>
+		{image && <meta property="og:image" content={new URL(image, Astro.site).href}>}
 
-		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'}>
 		<meta property="twitter:url" content={Astro.url}>
 		<meta name="twitter:title" content={pageTitle}>
 		<meta name="twitter:description" content={description || pageTitle}>
+		{image && <meta name="twitter:image" content={new URL(image, Astro.site).href}>}
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href}>
 		{favicons.map(favicon => (
 			<link rel="icon"
 				  href={favicon.src.startsWith('/') ? url(favicon.src) : favicon.src}
@@ -112,11 +130,11 @@ const siteLang = siteConfig.lang.replace('_', '-')
 
 		<slot name="head"></slot>
 
-		<link rel="stylesheet" href="https://cdn.staticfile.net/KaTeX/0.16.9/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 		<style define:vars={{ configHue }}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
+
+		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>}
 
 	</head>
 	<body class=" min-h-screen transition relative overflow-x-hidden" class:list={[{"is-home": isHomePage, "enable-banner": enableBanner}]}>
@@ -130,7 +148,7 @@ const siteLang = siteConfig.lang.replace('_', '-')
 		<GlobalStyles>
 		<div id="bg-overlay" class="fixed inset-0 z-0 opacity-30 dark:opacity-20 bg-black pointer-events-none"></div>
 		{enableBanner && <div id="full-bg" class="fixed inset-0 z-[-1] transition-all duration-1000"
-			style={`background: url(${getRandomBackground()}) center/cover no-repeat;`}
+			style={`background: url(${pickRandomBanner()}) center/cover no-repeat;`}
 		></div>}
 		{enableBanner && (
 			<button id="banner-switch" title="切换背景" class="fixed bottom-6 right-6 z-30 btn-regular w-10 h-10 rounded-full active:scale-90 opacity-40 hover:opacity-80 transition-all shadow-lg backdrop-blur-sm bg-white/20 dark:bg-black/20">
@@ -170,7 +188,6 @@ import {
 } from 'overlayscrollbars';
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 import {pathsEqual, url} from "../utils/url-utils";
-import { getRandomBackground } from '@utils/getRandomBackground';
 
 	/* Preload fonts */
 // (async function() {
@@ -275,16 +292,6 @@ function initCustomScrollbar() {
 			autoHideSuspend: false,
 		},
 	});
-	document.querySelectorAll('pre').forEach((ele) => {
-		OverlayScrollbars(ele, {
-			scrollbars: {
-				theme: 'scrollbar-base scrollbar-dark px-2',
-				autoHide: 'leave',
-				autoHideDelay: 500,
-				autoHideSuspend: false
-			}
-		});
-	});
 }
 
 function init() {
@@ -339,12 +346,17 @@ if (window?.swup?.hooks) {
 </script>
 
 <script>
-import PhotoSwipeLightbox from "photoswipe/lightbox"
-import "photoswipe/style.css"
+let lightbox: any
 
-let lightbox: PhotoSwipeLightbox
+async function createPhotoSwipe() {
+	// Only load PhotoSwipe when images are present on the page
+	if (!document.querySelector('.custom-md img, #post-cover img')) return
 
-function createPhotoSwipe() {
+	const [{ default: PhotoSwipeLightbox }] = await Promise.all([
+		import('photoswipe/lightbox'),
+		import('photoswipe/style.css'),
+	])
+
 	lightbox = new PhotoSwipeLightbox({
 		gallery: ".custom-md img, #post-cover img",
 		pswpModule: () => import("photoswipe"),
@@ -386,7 +398,7 @@ const setup = () => {
 	window.swup.hooks.on(
 		"content:replace",
 		() => {
-			console.log("content:replace")
+			
 			lightbox?.destroy?.()
 		},
 		{ before: true },
@@ -401,12 +413,22 @@ if (window.swup) {
 </script>
 
 
-<style is:global lang="stylus">
-#banner-wrapper
-	top: 0
-	opacity: 1
-.banner-closed
-	#banner-wrapper
-		top: -120px
-		opacity: 0
+<style is:global>
+#banner-wrapper {
+  top: 0;
+  opacity: 1;
+}
+.banner-closed #banner-wrapper {
+  top: -120px;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[float_8s_ease-in-out_infinite\],
+  .animate-\[float_10s_ease-in-out_1s_infinite\],
+  .animate-\[float_12s_ease-in-out_2s_infinite\] {
+    animation: none;
+    opacity: 0.15;
+  }
+}
 </style>

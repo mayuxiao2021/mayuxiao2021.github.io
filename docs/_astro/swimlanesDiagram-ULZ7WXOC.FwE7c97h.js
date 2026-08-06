@@ -1,0 +1,1 @@
+import{c as t,s as a}from"./flowDiagram-UKHOOZJN.Bvsu6dfs.js";import{_ as r}from"./mermaid.core.DUNLOHPh.js";var s=r(r=>`${a(r)}\n  .swimlane.cluster rect {\n    stroke: ${r.clusterBorder} !important;\n  }\n  [data-look="neo"].cluster rect {\n    filter: none;\n  }\n`,"getStyles"),l=s,c=t({defaultLayout:"swimlane",styles:l});export{c as diagram};

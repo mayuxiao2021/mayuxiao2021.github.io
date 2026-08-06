@@ -10,6 +10,7 @@ import { defineConfig } from "astro/config"
 export default defineConfig({
   site: "https://github.glmyx.eu.org",
   base: "/",
+  outDir: 'docs',
   trailingSlash: "always",
   integrations: [
     tailwind(),

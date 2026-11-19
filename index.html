@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>黯 · 选择界面 / RHINE ARCHIVE PORTAL</title>
-  <meta name="description" content="进入黯的博客前先选择界面：莱茵档案主题（含启动动画）、研究员名录演示，或旧版 Fuwari 博客。" />
+  <title>莱茵生命 · 档案入口 / RHINE LAB ARCHIVE</title>
+  <meta name="description" content="莱茵生命非官方同人档案入口：选择莱茵档案博客、研究员名录或旧版 Fuwari 归档。非商业演示，与鹰角网络无隶属关系。" />
   <meta name="theme-color" content="#eae5e1" />
   <link rel="canonical" href="https://github.glmyx.eu.org/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="黯 · 选择界面 / RHINE ARCHIVE PORTAL" />
-  <meta property="og:description" content="三种入口：莱茵档案主题、研究员名录、旧版 Fuwari 博客。" />
+  <meta property="og:title" content="莱茵生命 · 档案入口 / RHINE LAB ARCHIVE" />
+  <meta property="og:description" content="OBSERVER-07 请选择调阅方式：莱茵档案 / 研究员名录 / 旧版归档。" />
   <meta property="og:url" content="https://github.glmyx.eu.org/" />
   <meta property="og:image" content="https://github.glmyx.eu.org/rhinelab-blog/og/default.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -33,10 +33,12 @@
       --ink: #080a08;
       --ink-2: #3f3e38;
       --muted: #5f5d55;
-      --line: rgba(170, 165, 154, 0.6);
+      --line: rgba(170, 165, 154, 0.62);
+      --line-soft: rgba(170, 165, 154, 0.34);
       --amber: #9b7247;
       --amber-ink: #6f4c20;
       --amber-wash: rgba(155, 114, 71, 0.12);
+      --verd: #5f6f58;
       --grid: rgba(8, 10, 8, 0.05);
       --shadow: 0 1px 0 rgba(20, 24, 26, 0.05), 0 18px 44px -30px rgba(20, 24, 26, 0.45);
       --mono: "JetBrains Mono", "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
@@ -51,12 +53,13 @@
       --ink-2: #c9c4b7;
       --muted: #9a988f;
       --line: rgba(170, 178, 170, 0.24);
+      --line-soft: rgba(170, 178, 170, 0.14);
       --amber: #c5a16b;
       --amber-ink: #d9b985;
       --amber-wash: rgba(197, 161, 107, 0.12);
+      --verd: #8fa184;
       --grid: rgba(236, 231, 220, 0.05);
       --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 24px 54px -30px rgba(0, 0, 0, 0.8);
-      --theme-color: #11181b;
     }
     * { box-sizing: border-box; }
     html { color-scheme: light; }
@@ -70,8 +73,8 @@
       color: var(--ink);
       font-family: var(--sans);
       background:
-        radial-gradient(ellipse at 82% 8%, var(--amber-wash) 0%, transparent 52%),
-        radial-gradient(ellipse at 8% 92%, rgba(95, 111, 88, 0.08) 0%, transparent 46%),
+        radial-gradient(ellipse at 84% 4%, var(--amber-wash) 0%, transparent 52%),
+        radial-gradient(ellipse at 4% 96%, rgba(95, 111, 88, 0.09) 0%, transparent 48%),
         var(--paper);
       overflow-x: hidden;
     }
@@ -88,289 +91,411 @@
       mask-image: radial-gradient(ellipse at 50% 20%, #000 10%, transparent 78%);
     }
     a { color: inherit; }
-    .bar, .foot {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
+    .shell { position: relative; z-index: 2; display: flex; flex-direction: column; min-height: calc(100vh - clamp(2rem, 4.8vw, 4rem)); }
+
+    /* —— 页眉 —— */
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
     .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; }
     .brand svg { color: var(--amber-ink); flex: none; }
-    .brand b { display: block; font-size: 1rem; font-weight: 800; letter-spacing: 0.08em; }
-    .brand i {
-      display: block;
-      font-family: var(--mono);
-      font-size: 0.5625rem;
-      font-style: normal;
-      letter-spacing: 0.2em;
-      color: var(--muted);
+    .brand b { display: block; font-size: 1rem; font-weight: 800; letter-spacing: 0.1em; }
+    .brand i { display: block; font-family: var(--mono); font-size: 0.5rem; font-style: normal; letter-spacing: 0.22em; color: var(--muted); }
+    .bar-right { display: flex; align-items: center; gap: 0.9rem; }
+    .readout {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem;
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.16em; color: var(--muted);
+      line-height: 1.4;
     }
-    .bar-actions { display: flex; align-items: center; gap: 1rem; }
+    .readout b { font-weight: 400; color: var(--amber-ink); letter-spacing: 0.1em; }
     .direct {
-      font-family: var(--mono);
-      font-size: 0.625rem;
-      letter-spacing: 0.14em;
-      color: var(--amber-ink);
-      text-decoration: none;
-      border-bottom: 1px solid var(--amber);
-      padding-bottom: 0.2rem;
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--amber-ink);
+      text-decoration: none; border-bottom: 1px solid var(--amber); padding-bottom: 0.2rem; white-space: nowrap;
     }
     .direct:hover { color: var(--ink); }
     .theme-toggle {
-      display: inline-grid;
-      place-items: center;
-      width: 2.1rem;
-      height: 2.1rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: transparent;
-      color: var(--ink-2);
-      cursor: pointer;
+      display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: transparent; color: var(--ink-2); cursor: pointer;
     }
     .theme-toggle:hover { border-color: var(--amber); color: var(--amber-ink); }
     .theme-toggle:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-    main {
-      position: relative;
-      z-index: 2;
-      width: min(74rem, 100%);
-      margin: auto;
-      padding: clamp(2rem, 6vh, 4.5rem) 0;
+
+    /* —— 主区 —— */
+    main { position: relative; width: min(74rem, 100%); margin: auto; padding: clamp(2rem, 5.4vh, 4rem) 0 1rem; }
+    .portal-ring {
+      position: absolute; z-index: -1; top: clamp(-8rem, -12vw, -3rem); right: clamp(-10rem, -10vw, -2rem);
+      width: clamp(18rem, 34vw, 34rem); aspect-ratio: 1; border-radius: 50%;
+      border: 1px solid var(--line-soft);
+      background:
+        radial-gradient(circle, transparent 54%, var(--amber-wash) 55%, transparent 56%),
+        repeating-conic-gradient(from 0deg, var(--line-soft) 0deg 0.5deg, transparent 0.5deg 9deg);
+      -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 72%);
+      mask-image: radial-gradient(circle, #000 30%, transparent 72%);
+      opacity: 0.7; pointer-events: none; animation: portal-spin 90s linear infinite;
+    }
+    .portal-ring::after {
+      content: ""; position: absolute; inset: 18%; border-radius: 50%; border: 1px dashed var(--line-soft);
     }
     .kicker {
-      margin: 0 0 0.7rem;
-      font-family: var(--mono);
-      font-size: 0.625rem;
-      letter-spacing: 0.24em;
-      color: var(--amber-ink);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin: 0 0 0.7rem; font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.24em;
+      color: var(--amber-ink); text-transform: uppercase;
     }
+    .kicker::before { content: ""; width: 0.35rem; height: 0.35rem; background: var(--amber); }
     h1 {
-      margin: 0;
-      font-size: clamp(2.3rem, 4.6vw, 3.6rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -0.035em;
+      margin: 0; font-size: clamp(2.3rem, 4.6vw, 3.6rem); font-weight: 900;
+      line-height: 1.06; letter-spacing: -0.035em;
     }
     h1 span { color: var(--amber-ink); }
-    .lede {
-      max-width: 44rem;
-      margin: 0.9rem 0 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.8;
+    .lede { max-width: 46rem; margin: 0.85rem 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.8; }
+    .lede b { color: var(--ink-2); font-weight: 700; }
+
+    /* —— 遥测条 —— */
+    .telemetry {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0; margin-top: 1.4rem; border: 1px solid var(--line); border-radius: var(--radius);
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      font-family: var(--mono);
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.9rem;
-      margin-top: clamp(1.5rem, 4vh, 2.6rem);
+    .telemetry-cell { padding: 0.7rem 0.9rem; border-right: 1px solid var(--line-soft); }
+    .telemetry-cell:last-child { border-right: 0; }
+    .telemetry-cell span { display: block; font-size: 0.5rem; letter-spacing: 0.18em; color: var(--muted); }
+    .telemetry-cell b {
+      display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.25rem;
+      font-size: 0.86rem; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-2);
     }
+    .telemetry-cell b i { font-style: normal; font-size: 0.56rem; color: var(--amber-ink); letter-spacing: 0.12em; }
+    .meter { position: relative; height: 2px; margin-top: 0.45rem; background: var(--line-soft); overflow: hidden; }
+    .meter i { position: absolute; inset: 0 auto 0 0; width: var(--v, 60%); background: var(--amber); animation: meter-scan 2.8s ease-in-out infinite alternate; }
+    .meter--verd i { background: var(--verd); }
+
+    /* —— 跑马灯 —— */
+    .marquee {
+      display: flex; overflow: hidden; gap: 0; margin-top: 1.1rem;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: 0.42rem 0; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.26em; color: var(--muted);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee span { display: inline-flex; gap: 2.2rem; padding-right: 2.2rem; white-space: nowrap; animation: marquee 34s linear infinite; }
+    .marquee i { color: var(--amber-ink); font-style: normal; }
+
+    /* —— 卡片 —— */
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; margin-top: 1.3rem; }
     .card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      padding: 0.85rem;
-      text-decoration: none;
-      color: inherit;
+      position: relative; display: flex; flex-direction: column; gap: 0.8rem;
+      padding: 0.85rem; text-decoration: none; color: inherit;
       background: linear-gradient(180deg, var(--surface), var(--surface));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border: 1px solid var(--line); border-radius: var(--radius);
       transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.28s ease, box-shadow 0.28s ease;
     }
-    .card:hover, .card:focus-visible {
-      transform: translateY(-4px);
-      border-color: var(--amber);
-      box-shadow: var(--shadow);
-    }
+    .card:hover, .card:focus-visible { transform: translateY(-4px); border-color: var(--amber); box-shadow: var(--shadow); }
     .card:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-    .card--featured {
-      border-color: var(--amber);
-      background: linear-gradient(180deg, var(--amber-wash), transparent 62%), var(--surface);
-    }
-    .card-kicker {
-      font-family: var(--mono);
-      font-size: 0.5625rem;
-      letter-spacing: 0.22em;
-      color: var(--amber-ink);
-    }
+    .card--featured { border-color: var(--amber); background: linear-gradient(180deg, var(--amber-wash), transparent 62%), var(--surface); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .card-kicker { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.22em; color: var(--amber-ink); }
+    .card-spec { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.12em; color: var(--muted); }
+    .card-spec i { width: 0.34rem; height: 0.34rem; border-radius: 999px; background: var(--verd); box-shadow: 0 0 0 2px var(--line-soft); }
     .preview {
-      position: relative;
-      display: block;
-      height: 9.75rem;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      background: linear-gradient(140deg, var(--paper-2), var(--surface));
+      position: relative; display: block; height: 9.6rem; overflow: hidden;
+      border: 1px solid var(--line); border-radius: 2px; background: linear-gradient(140deg, var(--paper-2), var(--surface));
+      cursor: crosshair;
     }
-    .preview img { position: absolute; bottom: -18%; right: -6%; width: 58%; height: auto; filter: drop-shadow(0 8px 18px rgba(8, 10, 8, 0.18)); }
+    .preview::after {
+      content: ""; position: absolute; inset: -40% -20%; pointer-events: none;
+      background: linear-gradient(104deg, transparent 42%, rgba(255, 255, 255, 0.34) 50%, transparent 58%);
+      transform: translateX(-120%);
+    }
+    .card:hover .preview::after, .card:focus-visible .preview::after { animation: scan-pass 1.1s ease-out 1; }
+    .preview img { position: absolute; bottom: -18%; right: -6%; width: 58%; height: auto; filter: drop-shadow(0 8px 18px rgba(8, 10, 8, 0.18)); transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1); }
+    .card:hover .preview img { transform: translateY(-3%) scale(1.015); }
     .chrome { position: absolute; top: 0.45rem; left: 0.55rem; display: inline-flex; gap: 0.22rem; z-index: 2; }
     .chrome i { width: 0.3rem; height: 0.3rem; border-radius: 999px; background: var(--muted); opacity: 0.5; }
-    .mock-copy { position: absolute; left: 0.8rem; top: 1.6rem; display: flex; flex-direction: column; gap: 0.36rem; width: 46%; }
+    .specimen-tag {
+      position: absolute; right: 0.5rem; bottom: 0.45rem; z-index: 2;
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.16em; color: var(--muted);
+      border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 80%, transparent); padding: 0.12rem 0.3rem;
+    }
+    .mock-copy { position: absolute; left: 0.8rem; top: 1.55rem; display: flex; flex-direction: column; gap: 0.36rem; width: 46%; }
     .mock-copy i { display: block; height: 0.3rem; border-radius: 999px; background: var(--muted); opacity: 0.35; }
     .mock-copy .w70 { width: 70%; } .mock-copy .w92 { width: 92%; } .mock-copy .w56 { width: 56%; }
     .mock-copy .btn { height: 0.85rem; width: 46%; margin-top: 0.35rem; background: var(--amber); opacity: 0.55; border-radius: 1px; }
     .preview--dossier {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.2rem;
-      padding: 0.65rem 0.3rem 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.2rem; padding: 0.65rem 0.3rem 0;
       background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
       background-size: 28px 28px;
     }
     .preview--dossier img { position: static; width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: none; }
     .preview--legacy { padding: 1.5rem 0.7rem 0.7rem; background: radial-gradient(circle at 88% 0%, rgba(120, 156, 255, 0.2), transparent 56%), #eef1f8; }
     .legacy-card { display: block; height: 30%; margin-bottom: 0.32rem; border-radius: 0.38rem; background: #fff; border: 1px solid #dbe2f0; box-shadow: 0 2px 6px rgba(46, 64, 110, 0.06); }
-    .card-body { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; padding: 0 0.15rem 0.1rem; }
-    .card-title { font-size: 1.08rem; font-weight: 800; }
-    .card-desc { color: var(--muted); font-size: 0.8rem; line-height: 1.7; }
-    .meta { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    .meta i { font-family: var(--mono); font-size: 0.5625rem; font-style: normal; letter-spacing: 0.08em; padding: 0.16rem 0.36rem; color: var(--muted); border: 1px solid var(--line); border-radius: 2px; }
-    .cta { margin-top: auto; padding-top: 0.5rem; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.14em; color: var(--amber-ink); }
+    .card-body { display: flex; flex-direction: column; gap: 0.42rem; flex: 1; padding: 0 0.15rem 0.1rem; }
+    .card-title { font-size: 1.06rem; font-weight: 800; }
+    .card-desc { color: var(--muted); font-size: 0.79rem; line-height: 1.7; }
+    .meta { display: flex; flex-wrap: wrap; gap: 0.28rem; }
+    .meta i { font-family: var(--mono); font-size: 0.5rem; font-style: normal; letter-spacing: 0.08em; padding: 0.14rem 0.34rem; color: var(--muted); border: 1px solid var(--line); border-radius: 2px; }
+    .cta { margin-top: auto; padding-top: 0.45rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--amber-ink); display: flex; align-items: center; justify-content: space-between; }
+    .cta em { font-style: normal; letter-spacing: 0.2em; color: var(--muted); font-size: 0.5rem; }
+    .card--featured .cta { color: var(--ink); }
+
+    /* —— 工具条 / 页脚 —— */
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem 1.2rem;
-      margin-top: 1.5rem;
-      padding-top: 1.1rem;
-      border-top: 1px solid var(--line);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 0.8rem 1.2rem; margin-top: 1.3rem; padding-top: 1rem; border-top: 1px solid var(--line);
     }
-    .toggle { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.08em; color: var(--ink-2); cursor: pointer; }
+    .toggle { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-2); cursor: pointer; }
     .toggle input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     .track { position: relative; display: inline-block; width: 2rem; height: 1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--grid); transition: background 0.2s, border-color 0.2s; }
     .track i { position: absolute; top: 1px; left: 1px; width: 0.7rem; height: 0.7rem; border-radius: 999px; background: var(--muted); transition: transform 0.2s, background 0.2s; }
     .toggle input:checked + .track { background: var(--amber-wash); border-color: var(--amber); }
     .toggle input:checked + .track i { transform: translateX(0.95rem); background: var(--amber-ink); }
     .toggle input:focus-visible + .track { outline: 2px solid var(--amber); outline-offset: 2px; }
-    .replay { font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.12em; color: var(--amber-ink); text-decoration: none; border-bottom: 1px dashed var(--amber); }
+    .toolbar-links { display: flex; align-items: center; gap: 1.1rem; }
+    .replay { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--amber-ink); text-decoration: none; border-bottom: 1px dashed var(--amber); }
     .replay:hover { color: var(--ink); }
-    .note { margin: 0.9rem 0 0; max-width: 60rem; color: var(--muted); font-size: 0.72rem; line-height: 1.75; }
-    .foot { padding-top: 1.2rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.12em; color: var(--muted); }
+    .note { margin: 0.8rem 0 0; max-width: 62rem; color: var(--muted); font-size: 0.7rem; line-height: 1.75; }
+    .foot {
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem;
+      margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line);
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.12em; color: var(--muted);
+    }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
     .foot a { color: var(--amber-ink); text-decoration: none; }
     .foot a:hover { color: var(--ink); }
+    .barcode { display: inline-flex; align-items: flex-end; gap: 2px; height: 0.9rem; opacity: 0.55; }
+    .barcode i { display: block; width: 1px; height: 100%; background: var(--ink-2); }
+    .barcode i:nth-child(3n) { width: 2px; } .barcode i:nth-child(4n) { height: 62%; } .barcode i:nth-child(5n) { height: 78%; }
+    .hint { color: var(--muted); }
+    .hint b { color: var(--amber-ink); font-weight: 400; }
+
+    /* —— 彩蛋 —— */
+    .egg {
+      position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 1.5rem;
+      background: rgba(8, 12, 12, 0.82); color: #ece7dc; font-family: var(--mono);
+      opacity: 0; visibility: hidden; transition: opacity 0.22s ease, visibility 0.22s ease;
+      -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    }
+    .egg.is-on { opacity: 1; visibility: visible; }
+    .egg-box {
+      width: min(26rem, 88vw); padding: 1.3rem 1.4rem; border: 1px solid rgba(197, 161, 107, 0.45);
+      background: #0c1316; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 30px 70px -20px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+    .egg-box::before, .egg-box::after { content: ""; position: absolute; width: 1rem; height: 1rem; border: 2px solid #c5a16b; }
+    .egg-box::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+    .egg-box::after { right: -1px; bottom: -1px; border-left: 0; border-top: 0; }
+    .egg-kicker { margin: 0; font-size: 0.5rem; letter-spacing: 0.28em; color: rgba(233, 228, 214, 0.55); }
+    .egg-title { margin: 0.45rem 0 0.2rem; font-family: var(--sans); font-size: 1.15rem; font-weight: 800; letter-spacing: 0.12em; color: #f4efe3; }
+    .egg-line { margin: 0.55rem 0 0; font-size: 0.56rem; letter-spacing: 0.1em; color: rgba(233, 228, 214, 0.66); display: flex; justify-content: space-between; gap: 1rem; }
+    .egg-line b { color: #c5a16b; font-weight: 400; }
+    .egg-bar { height: 2px; margin-top: 0.9rem; background: rgba(197, 161, 107, 0.18); overflow: hidden; }
+    .egg-bar i { display: block; height: 100%; width: 100%; background: #c5a16b; transform-origin: left; animation: egg-bar 1.5s ease-out both; }
+    .egg-close { margin-top: 0.9rem; background: transparent; border: 1px solid rgba(233, 228, 214, 0.25); color: rgba(233, 228, 214, 0.7); font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.18em; padding: 0.32rem 0.6rem; cursor: pointer; }
+    .egg-close:hover { border-color: #c5a16b; color: #f4efe3; }
+
+    @keyframes portal-spin { to { transform: rotate(360deg); } }
+    @keyframes meter-scan { from { transform: scaleX(0.86); } to { transform: scaleX(1); } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes scan-pass { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+    @keyframes egg-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
     @media (max-width: 1024px) {
       .grid { grid-template-columns: 1fr; }
       .card { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; align-items: stretch; }
-      .card-kicker { grid-column: 1 / -1; }
-      .preview { height: 100%; min-height: 8.5rem; }
+      .card-top { grid-column: 1 / -1; }
+      .preview { height: 100%; min-height: 8.4rem; }
+      .portal-ring { opacity: 0.45; }
     }
     @media (max-width: 768px) {
       .bar { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .bar-right { width: 100%; justify-content: space-between; }
+      .readout { display: none; }
       .grid { grid-template-columns: 1fr; }
       .card { grid-template-columns: 1fr; display: flex; }
-      .preview { height: 8.5rem; }
+      .preview { height: 8.4rem; }
       h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
-      .foot { flex-direction: column; gap: 0.4rem; }
+      .telemetry { grid-template-columns: 1fr; }
+      .telemetry-cell { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+      .telemetry-cell:last-child { border-bottom: 0; }
+      .foot { flex-direction: column; align-items: flex-start; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      .marquee span { animation: none; white-space: normal; flex-wrap: wrap; }
+      .card:hover, .card:focus-visible { transform: none; }
     }
   </style>
 </head>
 <body>
-  <header class="bar">
-    <a class="brand" href="/" aria-label="黯 · 选择界面首页">
-      <svg width="26" height="26" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="1.5"></circle>
-        <circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5" opacity=".65"></circle>
-        <path d="M24 2.5v5.5M24 40v5.5M2.5 24H8M40 24h5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
-        <path d="M16.5 28.5 24 19.5l7.5 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"></path>
-        <path d="M16.5 34.5 24 25.5l7.5 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="square" opacity=".5"></path>
-        <circle cx="24" cy="24" r="1.6" fill="currentColor"></circle>
-      </svg>
-      <span>
-        <b>黯</b>
-        <i>RHINE ARCHIVE / SELECT INTERFACE</i>
+  <div class="shell">
+    <header class="bar">
+      <a class="brand" href="/" aria-label="莱茵生命档案入口">
+        <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="1.5"></circle>
+          <circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="1" stroke-dasharray="2 5" opacity=".65"></circle>
+          <path d="M24 2.5v5.5M24 40v5.5M2.5 24H8M40 24h5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
+          <path d="M16.5 28.5 24 19.5l7.5 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"></path>
+          <path d="M16.5 34.5 24 25.5l7.5 9" stroke="currentColor" stroke-width="1.3" stroke-linecap="square" opacity=".5"></path>
+          <circle cx="24" cy="24" r="1.6" fill="currentColor"></circle>
+        </svg>
+        <span>
+          <b>莱茵生命 · 档案入口</b>
+          <i>RHINE LAB / TRIMONT · COLUMBIA / OBSERVER-07</i>
+        </span>
+      </a>
+      <div class="bar-right">
+        <span class="readout" aria-hidden="true">
+          <span>SECTOR-03 / LOCAL <b id="clock">--:--:--</b></span>
+          <span>ACCESS <b>OBSERVER-07</b></span>
+        </span>
+        <a class="direct" href="/rhinelab-blog/">直接进入档案 →</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换亮色 / 暗色">◐</button>
+      </div>
+    </header>
+
+    <main>
+      <span class="portal-ring" aria-hidden="true"></span>
+      <p class="kicker">SPECIMEN ARCHIVE / 非官方同人档案</p>
+      <h1>调阅哪一份档案<span>？</span></h1>
+      <p class="lede">
+        <b>莱茵生命</b>在特里蒙留下的公开档案被归档成三种阅读界面：完整的莱茵档案博客、研究员名录，
+        以及迁移前的旧版阅读器。请选择调阅方式；所有条目均为非商业同人演示。
+      </p>
+
+      <div class="telemetry" role="group" aria-label="档案站状态读数">
+        <div class="telemetry-cell">
+          <span>ORIGIN / 归档来源</span>
+          <b>TRIMONT <i>COLUMBIA</i></b>
+          <div class="meter" style="--v: 88%"><i></i></div>
+        </div>
+        <div class="telemetry-cell">
+          <span>FIELD STABILITY / 结构稳定度</span>
+          <b>98.7% <i>NOMINAL</i></b>
+          <div class="meter meter--verd" style="--v: 98.7%"><i></i></div>
+        </div>
+        <div class="telemetry-cell">
+          <span>DOSSIERS / 档案总量</span>
+          <b id="dossier-count">07 <i>ENTRIES</i></b>
+          <div class="meter" style="--v: 64%"><i></i></div>
+        </div>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <span>
+          RHINE LAB <i>◆</i> STRUCTURE <i>◆</i> DEFENSE &amp; CLINICAL <i>◆</i> ECOLOGY &amp; FIELD <i>◆</i>
+          NON-COMMERCIAL ARCHIVE <i>◆</i> OBSERVER-07 <i>◆</i>
+          RHINE LAB <i>◆</i> STRUCTURE <i>◆</i> DEFENSE &amp; CLINICAL <i>◆</i> ECOLOGY &amp; FIELD <i>◆</i>
+          NON-COMMERCIAL ARCHIVE <i>◆</i> OBSERVER-07 <i>◆</i>
+        </span>
+      </div>
+
+      <div class="grid">
+        <a class="card card--featured" href="/rhinelab-blog/?intro=1">
+          <span class="card-top">
+            <span class="card-kicker">01 / RHINE ARCHIVE</span>
+            <span class="card-spec"><i></i>RL-ARC-01</span>
+          </span>
+          <span class="preview">
+            <span class="chrome"><i></i><i></i><i></i></span>
+            <img src="/rhinelab-blog/rhine/art/card-muelsyse.webp" alt="" width="700" height="700" loading="lazy" />
+            <span class="mock-copy"><i class="w70"></i><i class="w92"></i><i class="w56"></i><i class="btn"></i></span>
+            <span class="specimen-tag">SPECIMEN-01</span>
+          </span>
+          <span class="card-body">
+            <b class="card-title">莱茵档案</b>
+            <span class="card-desc">完整的莱茵生命主题：暖纸档案、双角色英雄区、组织与设施图录；进入时播放启动序列。</span>
+            <span class="meta"><i>暖纸 / 黄铜</i><i>亮暗双模式</i><i>启动动画</i></span>
+            <span class="cta">带启动动画进入 →<em>ACCESS RL-01</em></span>
+          </span>
+        </a>
+
+        <a class="card" href="/rhinelab-blog/operators/">
+          <span class="card-top">
+            <span class="card-kicker">02 / DOSSIER</span>
+            <span class="card-spec"><i></i>RL-OPS-08</span>
+          </span>
+          <span class="preview preview--dossier">
+            <img src="/rhinelab-blog/rhine/art/card-saria.webp" alt="" width="700" height="700" loading="lazy" />
+            <img src="/rhinelab-blog/rhine/art/card-muelsyse.webp" alt="" width="700" height="700" loading="lazy" />
+            <img src="/rhinelab-blog/rhine/art/card-ifrit.webp" alt="" width="700" height="700" loading="lazy" />
+            <span class="specimen-tag">SPECIMEN-02</span>
+          </span>
+          <span class="card-body">
+            <b class="card-title">研究员名录</b>
+            <span class="card-desc">8 位莱茵生命干员的档案卡与大型立绘，适合先看主题的视觉密度与信息排版。</span>
+            <span class="meta"><i>8 位干员</i><i>立绘 / 档案</i><i>非商业演示</i></span>
+            <span class="cta">进入名录 →<em>ACCESS RL-02</em></span>
+          </span>
+        </a>
+
+        <a class="card" href="/legacy-blog/">
+          <span class="card-top">
+            <span class="card-kicker">03 / LEGACY</span>
+            <span class="card-spec"><i></i>RL-ARC-00</span>
+          </span>
+          <span class="preview preview--legacy">
+            <span class="chrome"><i></i><i></i><i></i></span>
+            <span class="legacy-card"></span><span class="legacy-card"></span><span class="legacy-card"></span>
+            <span class="specimen-tag">ARCHIVE-00</span>
+          </span>
+          <span class="card-body">
+            <b class="card-title">旧版阅读器</b>
+            <span class="card-desc">迁移前的 Fuwari 原版界面，完整归档在同一域名的 /legacy-blog/ 路径，方便对照两套阅读体验。</span>
+            <span class="meta"><i>Fuwari 原版</i><i>归档快照</i><i>子路径</i></span>
+            <span class="cta">前往旧版 →<em>ACCESS RL-00</em></span>
+          </span>
+        </a>
+      </div>
+
+      <div class="toolbar">
+        <label class="toggle">
+          <input id="boot-toggle" type="checkbox" checked />
+          <span class="track" aria-hidden="true"><i></i></span>
+          <span>进入莱茵档案时播放启动序列</span>
+        </label>
+        <div class="toolbar-links">
+          <a class="replay" href="/rhinelab-blog/?intro=1">现在播放启动序列</a>
+        </div>
+      </div>
+      <p class="note">
+        偏好保存在本机浏览器，与博客共用同一个开关；系统开启「减少动态效果」时启动序列自动跳过。
+        非官方、非营利的同人演示，与鹰角网络（Hypergryph）无隶属或合作关系；演示页立绘版权归鹰角网络。
+      </p>
+    </main>
+
+    <footer class="foot">
+      <span>RHINE LAB / TRIMONT · COLUMBIA <span id="build-version"></span></span>
+      <span class="foot-links">
+        <span class="barcode" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <a href="https://github.com/mayuxiao2021/rhinelab-blog" target="_blank" rel="noopener noreferrer">BLOG REPO</a>
+        <a href="https://github.com/mayuxiao2021/legacy-blog" target="_blank" rel="noopener noreferrer">LEGACY REPO</a>
+        <span class="hint">HINT / 输入 <b>rhine</b> 试试</span>
       </span>
-    </a>
-    <div class="bar-actions">
-      <a class="direct" href="/rhinelab-blog/">直接进入博客 →</a>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换亮色 / 暗色">◐</button>
+    </footer>
+  </div>
+
+  <div class="egg" id="egg" aria-hidden="true">
+    <div class="egg-box">
+      <p class="egg-kicker">RHINE LAB // DIAGNOSTIC</p>
+      <p class="egg-title">ACCESS GRANTED</p>
+      <p class="egg-line"><span>OBSERVER</span><b>07 / 黯</b></p>
+      <p class="egg-line"><span>ARCHIVE SYNC</span><b>COMPLETE</b></p>
+      <p class="egg-line"><span>STRUCTURE / DEFENSE / ECOLOGY</span><b>OK</b></p>
+      <div class="egg-bar"><i></i></div>
+      <button class="egg-close" id="egg-close" type="button">返回档案 / CLOSE</button>
     </div>
-  </header>
-
-  <main>
-    <p class="kicker">START / 引导</p>
-    <h1>选择你的界面<span>.</span></h1>
-    <p class="lede">
-      同一份内容，三种入口。莱茵档案提供完整的启动序列与档案氛围；名录适合直接看视觉；
-      旧版保留原来的 Fuwari 阅读体验。
-    </p>
-
-    <div class="grid">
-      <a class="card card--featured" href="/rhinelab-blog/?intro=1">
-        <span class="card-kicker">01 / RHINE ARCHIVE</span>
-        <span class="preview">
-          <span class="chrome"><i></i><i></i><i></i></span>
-          <img src="/rhinelab-blog/rhine/art/card-muelsyse.webp" alt="" width="700" height="700" loading="lazy" />
-          <span class="mock-copy"><i class="w70"></i><i class="w92"></i><i class="w56"></i><i class="btn"></i></span>
-        </span>
-        <span class="card-body">
-          <b class="card-title">莱茵档案</b>
-          <span class="card-desc">当前的莱茵生命主题：暖纸质档案、双角色英雄区、组织与设施图录，进入时播放一段启动序列。</span>
-          <span class="meta"><i>暖纸 / 黄铜</i><i>亮暗双模式</i><i>启动动画</i></span>
-          <span class="cta">带启动动画进入 →</span>
-        </span>
-      </a>
-
-      <a class="card" href="/rhinelab-blog/operators/">
-        <span class="card-kicker">02 / DOSSIER</span>
-        <span class="preview preview--dossier">
-          <img src="/rhinelab-blog/rhine/art/card-saria.webp" alt="" width="700" height="700" loading="lazy" />
-          <img src="/rhinelab-blog/rhine/art/card-muelsyse.webp" alt="" width="700" height="700" loading="lazy" />
-          <img src="/rhinelab-blog/rhine/art/card-ifrit.webp" alt="" width="700" height="700" loading="lazy" />
-        </span>
-        <span class="card-body">
-          <b class="card-title">研究员名录</b>
-          <span class="card-desc">8 位莱茵生命干员的档案卡与大型立绘，适合先看主题的视觉密度与信息排版。</span>
-          <span class="meta"><i>8 位干员</i><i>立绘 / 档案</i><i>非商业演示</i></span>
-          <span class="cta">进入名录 →</span>
-        </span>
-      </a>
-
-      <a class="card" href="/legacy-blog/">
-        <span class="card-kicker">03 / LEGACY</span>
-        <span class="preview preview--legacy">
-          <span class="chrome"><i></i><i></i><i></i></span>
-          <span class="legacy-card"></span><span class="legacy-card"></span><span class="legacy-card"></span>
-        </span>
-        <span class="card-body">
-          <b class="card-title">旧版博客</b>
-          <span class="card-desc">迁移前的 Fuwari 原版界面，完整归档在同一域名的 /legacy-blog/ 路径，方便对照两套阅读体验。</span>
-          <span class="meta"><i>Fuwari 原版</i><i>归档快照</i><i>子路径</i></span>
-          <span class="cta">前往旧版 →</span>
-        </span>
-      </a>
-    </div>
-
-    <div class="toolbar">
-      <label class="toggle">
-        <input id="boot-toggle" type="checkbox" checked />
-        <span class="track" aria-hidden="true"><i></i></span>
-        <span>进入莱茵档案时播放启动动画</span>
-      </label>
-      <a class="replay" href="/rhinelab-blog/?intro=1">现在播放启动动画</a>
-    </div>
-    <p class="note">
-      偏好保存在本机浏览器，与博客共用同一个开关；系统开启「减少动态效果」时启动序列自动跳过。
-      站点代码 MIT，内容 CC BY-NC-SA；演示页立绘版权归鹰角网络，仅非商业同人演示。
-    </p>
-  </main>
-
-  <footer class="foot">
-    <span>黯 / RHINE ARCHIVE · PORTAL <span id="build-version"></span></span>
-    <span>
-      <a href="https://github.com/mayuxiao2021/rhinelab-blog" target="_blank" rel="noopener noreferrer">BLOG REPO</a>
-      · <a href="https://github.com/mayuxiao2021/legacy-blog" target="_blank" rel="noopener noreferrer">LEGACY REPO</a>
-      · MIT CODE / CC BY-NC-SA CONTENT
-    </span>
-  </footer>
+  </div>
 
   <script>
     ;(() => {
       const root = document.documentElement
+      const clock = document.getElementById('clock')
+      const tick = () => {
+        const now = new Date()
+        const pad = n => String(n).padStart(2, '0')
+        if (clock) clock.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
+      }
+      tick()
+      setInterval(tick, 1000)
+
       const toggle = document.getElementById('theme-toggle')
       toggle?.addEventListener('click', () => {
         const next = root.dataset.theme === 'dark' ? 'light' : 'dark'
@@ -398,10 +523,40 @@
       fetch('/rhinelab-blog/build-info.json')
         .then(response => (response.ok ? response.json() : null))
         .then(info => {
-          const target = document.getElementById('build-version')
-          if (target && info?.version) target.textContent = `· BUILD v${info.version}`
+          const version = document.getElementById('build-version')
+          if (version && info?.version) version.textContent = `· BUILD v${info.version}`
+          const count = document.getElementById('dossier-count')
+          if (count && typeof info?.counts?.posts === 'number') {
+            count.innerHTML = `${String(info.counts.posts).padStart(2, '0')} <i>ENTRIES</i>`
+          }
         })
         .catch(() => {})
+
+      /* 小巧思：在任何页面输入 rhine，唤起一次诊断浮层 */
+      const egg = document.getElementById('egg')
+      const eggClose = document.getElementById('egg-close')
+      let buffer = ''
+      const closeEgg = () => egg?.classList.remove('is-on')
+      const openEgg = () => {
+        if (!egg) return
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        egg.classList.add('is-on')
+        window.setTimeout(closeEgg, 3600)
+      }
+      window.addEventListener('keydown', event => {
+        if (event.metaKey || event.ctrlKey || event.altKey) return
+        if (event.key.length !== 1) return
+        buffer = (buffer + event.key.toLowerCase()).slice(-5)
+        if (buffer === 'rhine') {
+          buffer = ''
+          openEgg()
+        }
+        if (event.key === 'Escape') closeEgg()
+      })
+      eggClose?.addEventListener('click', closeEgg)
+      egg?.addEventListener('click', event => {
+        if (event.target === egg) closeEgg()
+      })
     })()
   </script>
 </body>

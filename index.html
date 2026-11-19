@@ -541,7 +541,7 @@
         if (!egg) return
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
         egg.classList.add('is-on')
-        window.setTimeout(closeEgg, 3600)
+        window.setTimeout(closeEgg, 12000)
       }
       window.addEventListener('keydown', event => {
         if (event.metaKey || event.ctrlKey || event.altKey) return
